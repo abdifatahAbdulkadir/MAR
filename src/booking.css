@@ -1,0 +1,39 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+/*
+  <th><button id="timepicked">Book</button></th>
+        
+*/
+#descriptionId{
+  width: 100%;
+  height: 60%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+#timepicked{
+  background-color: #4CAF50;
+color: white;
+padding: 16px 20px;
+
+border: none;
+cursor: pointer;
+height: fit-content;
+width: 100%;
+opacity: 1;
+
+}
+#btnregister{
+background-color: #4CAF50;
+color: white;
+padding: 16px 20px;
+margin: 8px 0;
+border: none;
+cursor: pointer;
+width: 100%;
+opacity: 0.9;
+}
