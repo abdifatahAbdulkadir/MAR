@@ -3,7 +3,6 @@ const dbcon=mysql.createConnection({
 host:'localhost',
 user:'root',
 password:'root',
-
 database:'calendar'
 });
 var sql="select * from calendar_table where isBooked='false'";
