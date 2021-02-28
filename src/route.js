@@ -9,10 +9,21 @@ router.get("/getAllCalendar", async(req,res) =>{
         res.json(dbResult); // response from database will be returned as json
         console.log(dbResult); //print the result to the console
     } catch (error) {
-        console.log("JsonError" + e);
+        console.log("JsonError" + error);
         res.send("500");
     }
 });
+
+router.get("/getNews", async(req,res) =>{
+    try{
+        let dbResult = await callDbQuery.news();
+        res.json(dbResult);
+        console.log(dbResult);
+    } catch (error){
+        console.log("JsonError" + error);
+        res.send("500")
+    }
+})
 
 
 router.get("/getUnbookedReperation", async(req,res) =>{
