@@ -10,19 +10,18 @@
   <title>New Article</title>
 </head>
 <body>
-  <form action="/desc">
+  <form action="/newArticle" method="POST">
     <div class="form-group">
       <label for="title">Title </label>
-      <input type="text" class="form-control" id="title">
+      <input type="text" class="form-control" id="title" name="title" required>
     </div>
-    
     
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea class="form-control" id="description" rows="3"></textarea>
+      <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button> <t>
-    <button type="submit" class="btn btn-secondary"> <a href="index.html" style="text-decoration: none;">Cancel</a> </button>
+    <button type="submit" class="btn btn-primary">Save Article</button> <t>
+    <button type="submit" class="btn btn-secondary"> <a href="./index" style="text-decoration: none;">Go back</a> </button> 
   </form>
 </body>
 </html>

@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="server.js"></script>
+    <link rel="stylesheet" href="style.css">
     
     <title>MAR</title>
     
@@ -18,9 +17,9 @@
                 <h1>MAR</h1>
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Showcase</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/about">About</a></li>
                     </ul>
                 </nav>
             </header>
@@ -28,11 +27,33 @@
     </div>
 
     <div class="h1">
-        <h1 > News <button type="submit" class="btn btn-primary" style="background-color:teal; height: 50px; width: 100px; " >  <a href="newArticle.html" style="text-decoration: none;" > New Article</a>   </button></h1>
-    
-    <div id="container">
+        <h1 > News <button type="submit" class="btn btn-primary" style="background-color:teal; height: 50px; width: 100px; " >  <a href="./newArticle" style="text-decoration: none;" > New Article</a>   </button></h1>
         
     </div>
+
+      <div id="articles" >
+          
     </div>
+    <script>
+      fetch('http://localhost:2000/news').then(function (response){
+            return response.json();
+        }).then(function (data){
+            appendData(data);
+        }).catch(function (err){
+            console.log("error:" + err);
+        });
+        function appendData(data){
+            let mainContainer = document.getElementById("articles");
+            for (let i = 0; i < data.length; i++){
+                let div = document.createElement("div");
+                div.innerHTML = 
+                                "<div class= 'innerArticles' "+
+                                "<h1>" + data[i].title + "</h1>" + " <br> " + 
+                                "<h5>" + data[i].date + "</h5>" + " <br> " +
+                                "<p>" + data[i].description + "</p>" + "</div> <br>" 
+                mainContainer.appendChild(div);
+            }
+        }
+    </script>
 </body>
 </html>

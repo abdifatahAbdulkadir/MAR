@@ -68,3 +68,12 @@ nav ul li a:hover{
     margin-top: 15%;
     
 }
+#articles{
+    margin-left: 20%; 
+    margin-top: 15%; 
+    position: absolute;
+}
+.innerArticles{
+    margin-top:  "200px";
+    border: solid teal;
+}
