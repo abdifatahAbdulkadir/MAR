@@ -6,23 +6,29 @@ const session = require('express-session');
 const morgan = require("morgan");
 const flash = require("req-flash");
 const connectFlash = require("connect-flash");
+const apiRouter = require("./route");
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "yasiin98", //write your database password
-    database: "temp", // your database name
+    password: "root", //write your database password
+    database: "getnews", // your database name
     port: 3306,
     connectionLimit: 10
 });
+
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/src/views'));
+
+
 
 
 
 app.use(morgan("short"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use("/",apiRouter);
 
 app.use(session({
     secret: "secret",
@@ -43,8 +49,18 @@ app.get('/register', function(req, res) {
 app.get('/login', function(req, res) {
 	res.sendFile(path.join(__dirname,"./views/login.html"));
 });
-//app.use(express.static(publicDirectory));
-0
+
+app.get('/newArticle', function(req, res) {
+	res.sendFile(path.join(__dirname,"./views/newArticle.html"));
+});
+
+app.get('/index', function(req, res) {
+	res.sendFile(path.join(__dirname,"./views/index.html"));
+});
+
+app.get('/about', function(req,res){
+    res.sendFile(path.join(__dirname,"./views/about.html"))
+})
 
 //login
 app.post("/auth", (req,res) => {
@@ -83,7 +99,7 @@ app.post("/auth", (req,res) => {
 //sign up
 app.post("/register", (req,res) => {
     const {name, email, password, passwordConfirm} = req.body;
-    connection.query("SELECT email FROM temp.users WHERE email = ?", [email], async(err,result)=> {
+    connection.query("SELECT email FROM getnews.register WHERE email = ?", [email], (err,result)=> {
         if (err) {
             console.log(err);
         }else{
@@ -99,7 +115,7 @@ app.post("/register", (req,res) => {
         }
 
         if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
-        connection.query("INSERT INTO temp.users set ?", {name: name, email: email, password: password}, (err,result) => {
+        connection.query("INSERT INTO getnews.register set ?", {name: name, email: email, password: password}, (err,result) => {
             if (err) {
                 console.log(err);
             }else {
@@ -121,6 +137,22 @@ app.post("/register", (req,res) => {
     });
 });
 
+app.post("/newArticle", (req, res) => {
+    const {title, description} = req.body;
+    const date = new Date();
+
+    if(!(title === "" && description === "")){
+    connection.query("INSERT INTO getnews.news set ?", {title: title, description: description, date}, (err,result) => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(result);
+            return res.render("index");
+        }
+    });
+   }
+});
+
 app.get("/index", function(req,res) {
     if (req.session.loggedin) {
         //res.send("Welcome back, " + req.session.email + "!");
@@ -131,6 +163,7 @@ app.get("/index", function(req,res) {
     }
     res.end();
 });
+
 
 
 
