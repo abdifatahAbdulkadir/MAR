@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root", //write your database password
-    database: "getnews", // your database name
+    database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
 });
@@ -66,7 +66,7 @@ app.get('/about', function(req,res){
 app.post("/auth", (req,res) => {
     const { email, password } = req.body;
     if(email && password) {
-        connection.query("SELECT * FROM temp.users WHERE email=? AND password=?", [email,password], function(err,result){
+        connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email,password], function(err,result){
             if(result.length > 0) {
                 req.session.loggedin = true;
                 req.session.email = email;
@@ -99,7 +99,7 @@ app.post("/auth", (req,res) => {
 //sign up
 app.post("/register", (req,res) => {
     const {name, email, password, passwordConfirm} = req.body;
-    connection.query("SELECT email FROM getnews.register WHERE email = ?", [email], (err,result)=> {
+    connection.query("SELECT email FROM calendar.register WHERE email = ?", [email], (err,result)=> {
         if (err) {
             console.log(err);
         }else{
@@ -142,7 +142,7 @@ app.post("/newArticle", (req, res) => {
     const date = new Date();
 
     if(!(title === "" && description === "")){
-    connection.query("INSERT INTO getnews.news set ?", {title: title, description: description, date}, (err,result) => {
+    connection.query("INSERT INTO calendar.news set ?", {title: title, description: description, date}, (err,result) => {
         if(err){
             console.log(err);
         } else {
