@@ -27,7 +27,7 @@
     </div>
 
     <div class="h1">
-        <h1 > News <button type="submit" class="btn btn-primary" style="background-color:teal; height: 50px; width: 100px; " >  <a href="./newArticle" style="text-decoration: none;" > New Article</a>   </button></h1>
+        <h1 > News <button type="submit" class="btn-primary" >  <a href="./newArticle" > New Article</a>   </button></h1>
         
     </div>
 
@@ -48,8 +48,8 @@
                 let div = document.createElement("div");
                 div.innerHTML = 
                                 "<div class= 'innerArticles' "+
-                                "<h1>" + data[i].title + "</h1>" + " <br> " + 
-                                "<h5>" + data[i].date + "</h5>" + " <br> " +
+                                "<h1> <strong>" + data[i].title + "</strong> </h1>" + " <br> " + 
+                                "<h5 class='dateClass'>" + data[i].date + "</h5>" + " <br> " +
                                 "<p>" + data[i].description + "</p>" + "</div> <br>" 
                 mainContainer.appendChild(div);
             }

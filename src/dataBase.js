@@ -5,7 +5,7 @@ let connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root", //write your database password
-    database: "getnews", // your database name
+    database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10,
     insecureAuth : true
@@ -15,7 +15,7 @@ let db = {};
 
 db.news = () => {
     return new Promise ((resolve, reject) =>{
-        connection.query(`SELECT * FROM getnews.news`, function (err,results){
+        connection.query(`SELECT * FROM calendar.news`, function (err,results){
             if(err){
                 reject(err);
             } else{
@@ -30,7 +30,7 @@ db.getUnbookedReperation = () => {
     return new Promise((resolve, reject) => {
 
         //if there is no error then resolve (return) a result
-        connection.query("SELECT * FROM calendar_table where isBooked='false'", function(err, results){
+        connection.query("SELECT * FROM calendar where isBooked='false'", function(err, results){
             if(err){
                 reject(err);
             }else{

@@ -1,7 +1,8 @@
+
 * {
     padding: 0;
     margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 body{
@@ -23,10 +24,9 @@ body{
 
 
 .inner-container h1 {
-    display: block;
     font-size: 350% ;
-    margin-top: 140px;
-    margin-left: 5px;
+    margin-top: 10%;
+    margin-left: 5%;
 }
 
 nav ul{
@@ -36,7 +36,7 @@ nav ul{
 nav ul li{
     list-style: none;
     margin-top: 5px;
-    font-size: 18px;
+    font-size: 25px;
 }
 
 nav ul li a{
@@ -74,6 +74,58 @@ nav ul li a:hover{
     position: absolute;
 }
 .innerArticles{
-    margin-top:  "200px";
-    border: solid teal;
+    height: 100px;
+    width: 800px;
+    font-size: 18px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 5px; 
 }
+.dateClass{
+    color: gray;
+}
+.btn-primary{
+    background: #00807e;
+    border-radius: 28px;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    
+}
+.btn-primary a{
+    color:#ffffff;
+    text-decoration: none;
+    list-style: none;
+}
+.login-container{
+    margin-left: 20%;
+    top: 20%;
+    position: absolute;
+
+}
+
+@media only screen and (max-width: 500px) {
+    .inner-container h1 {
+        font-size: 150% ;
+        margin-top: 10%;
+        margin-left: -20px;
+    }
+
+  }
+
+  @media only screen and (max-width: 800px) {
+    .inner-container h1 {
+        font-size: 200% ;
+        margin-top: 10%;
+        margin-left: -20px;
+    }
+
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .inner-container h1 {
+        font-size: 300% ;
+        margin-top: 10%;
+        margin-left: -20px;
+    }
+
+  }
