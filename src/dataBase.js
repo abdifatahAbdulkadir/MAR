@@ -25,20 +25,7 @@ db.news = () => {
     });
 }
 
-
-db.getUnbookedReperation = () => {
-    return new Promise((resolve, reject) => {
-
-        //if there is no error then resolve (return) a result
-        connection.query("SELECT * FROM calendar where isBooked='false'", function(err, results){
-            if(err){
-                reject(err);
-            }else{
-                resolve(results);
-            }
-        });
-    });
-}
+ 
 
 //ToDo add the delete, update, insert queries below, follow above example ⬆
 

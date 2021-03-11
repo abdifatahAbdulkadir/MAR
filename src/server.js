@@ -48,6 +48,13 @@ app.get('/register', function(req, res) {
 //gets the path to login file on the URL field --> localhost:2000/
 app.get('/login', function(req, res) {
 	res.sendFile(path.join(__dirname,"./views/login.html"));
+
+});
+
+app.get('/logout', function(req, res) {
+	req.logout();
+    req.session.destroy();
+    res.redirect('/login');
 });
 
 app.get('/newArticle', function(req, res) {
@@ -99,7 +106,7 @@ app.post("/auth", (req,res) => {
 //sign up
 app.post("/register", (req,res) => {
     const {name, email, password, passwordConfirm} = req.body;
-    connection.query("SELECT email FROM calendar.register WHERE email = ?", [email], (err,result)=> {
+    connection.query("SELECT email FROM users WHERE email = ?", [email], (err,result)=> {
         if (err) {
             console.log(err);
         }else{
@@ -115,7 +122,7 @@ app.post("/register", (req,res) => {
         }
 
         if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
-        connection.query("INSERT INTO getnews.register set ?", {name: name, email: email, password: password}, (err,result) => {
+        connection.query("INSERT INTO users set ?", {name: name, email: email, password: password}, (err,result) => {
             if (err) {
                 console.log(err);
             }else {
@@ -169,6 +176,6 @@ app.get("/index", function(req,res) {
 
 
 //start server
-app.listen(2000, function() {
-    console.log("running server on port 2000");
+app.listen(3000, function() {
+    console.log("running server on port 3000");
 });
