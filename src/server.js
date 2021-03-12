@@ -8,6 +8,7 @@ const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
 
+
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -32,8 +33,8 @@ app.use("/",apiRouter);
 
 app.use(session({
     secret: "secret",
-    resave: false,
-    saveUninitialized: true
+    resave: true,
+    saveUninitialized: false
 }));
 
 app.use(flash());
@@ -52,21 +53,29 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-	req.logout();
-    req.session.destroy();
-    res.redirect('/login');
-});
+    // remove the req.user property and clear the login session
+  req.sessionID=null;
+  console.log(req.sessionID);
+  res.redirect('/login');
+  });
 
 app.get('/newArticle', function(req, res) {
+    if(req.session.loggedin){
 	res.sendFile(path.join(__dirname,"./views/newArticle.html"));
+    }
 });
 
 app.get('/index', function(req, res) {
+    if(req.session.loggedin){
+    
 	res.sendFile(path.join(__dirname,"./views/index.html"));
+    }
 });
 
 app.get('/about', function(req,res){
+    if(req.session.loggedin){
     res.sendFile(path.join(__dirname,"./views/about.html"))
+    }
 })
 
 //login
