@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
-
+let user_id;
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -65,17 +65,21 @@ app.get('/newArticle', function(req, res) {
     }
 });
 
-app.get('/index', function(req, res) {
-    if(req.session.loggedin){
+app.get('/index',isLoggedIn, function(req, res) {
+
     
 	res.sendFile(path.join(__dirname,"./views/index.html"));
-    }
+    
 });
 
-app.get('/about', function(req,res){
-    if(req.session.loggedin){
-    res.sendFile(path.join(__dirname,"./views/about.html"))
-    }
+app.get('/about',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/about.html"));
+    
+});
+
+app.get('/mybookings',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/myBookings.html"));
+    
 })
 
 //login
@@ -84,6 +88,7 @@ app.post("/auth", (req,res) => {
     if(email && password) {
         connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email,password], function(err,result){
             if(result.length > 0) {
+                user_id = result[0].user_id;
                 req.session.loggedin = true;
                 req.session.email = email;
                 return res.status(200).render("./index.html");
@@ -111,6 +116,43 @@ app.post("/auth", (req,res) => {
 
 });
 
+
+app.get('/bookingReperation', isLoggedIn, function(req, res) {
+    res.sendFile(path.join(__dirname, "./views/bookingReperation.html"));
+});
+
+//bookingReperation
+app.post("/bookingReperation", (req, res) => {
+    const { book_date, descr } = req.body;
+    if (req.session.loggedin) {
+
+        connection.query("SELECT book_date FROM calendar.book WHERE book_date = ?", [book_date], function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result.length > 0) {
+                    return res.render("bookingReperation", {
+                        message: "Date is already in use"
+                    });
+                } else {
+                    if (!(descr === "" && book_date === "")) {
+                        connection.query("INSERT INTO calendar.book set ?", { descr: descr, book_date: book_date, user_id }, (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                
+                            } else {
+                                return res.render("index", {
+                                    message: "Booking Registered"
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        });
+ 
+    }
+});
 
 //sign up
 app.post("/register", (req,res) => {
@@ -169,16 +211,42 @@ app.post("/newArticle", (req, res) => {
    }
 });
 
-app.get("/index", function(req,res) {
-    if (req.session.loggedin) {
+app.get("/index", isLoggedIn,function(req,res) {
+  
         //res.send("Welcome back, " + req.session.email + "!");
         return res.status(200).render("./index.html");
-    }else {
-        console.log("----> Not allowed login first");
-        res.send("Please login to view the page");
-    }
-    res.end();
+
 });
+
+
+app.get("/booked",(req, res, next) => {
+    if (!req.session.loggedin) {
+        return res.status(401).redirect("./login");
+    } else {
+
+        console.log("User_id --> " + user_id);
+                connection.query("SELECT descr, book_date  FROM calendar.book WHERE user_id =" + user_id, function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (result.length > 0) {
+                            res.json(result);
+                        }
+                    }
+
+                });
+
+    }
+});
+
+
+function isLoggedIn(req, res, next) {
+    if (!req.session.loggedin) {
+        return res.status(401).redirect("./login");
+    } else {
+        next();
+    }
+}
 
 
 
