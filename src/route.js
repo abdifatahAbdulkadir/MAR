@@ -14,6 +14,8 @@ router.get("/getAllCalendar/", async(req,res) =>{
     }
 });
 
+
+
 router.get("/news", async(req, res) => {
     try {
         let dbResult = await data_base.module.news();
@@ -27,16 +29,6 @@ router.get("/news", async(req, res) => {
 
 
 
-router.get("/getUnbookedReperation", async(req,res) =>{
-    try {
-        let dbResult = await data_base.getUnbookedReperation();
-        res.json(dbResult); // response from database will be returned as json
-        console.log(dbResult); //print the result to the console
-    } catch (error) {
-        console.log("JsonError" + error);
-        res.send("500");
-    }
-});
 
 
 module.exports = router;

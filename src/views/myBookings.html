@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="booking.css">
+
+</head>
+
+<body>
+    <div class="table-container">
+        <table id="tableData">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Booked Date</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+
+        </table>
+
+        <script>
+            fetch('http://localhost:3000/booked').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                appendData(data);
+            }).catch(function (err) {
+                console.log("error:" + err);
+            });
+            function appendData(data) {
+                let tbodyContainer = document.getElementById("tbody");
+                for (let i = 0; i < data.length; i++) {
+                    let tr = document.createElement("tr");
+                    tr.innerHTML =
+                        "<tr>"
+                        +
+                        "<th>" + data[i].descr + "</th>" +
+                        "<th>" + data[i].book_date + "</th>" +
+                        "</tr>";
+
+                    tbodyContainer.appendChild(tr);
+                }
+            }
+
+        </script>
+
+    </div>
+</body>
+</html>
+
