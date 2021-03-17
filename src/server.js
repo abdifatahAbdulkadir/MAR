@@ -12,7 +12,7 @@ let user_id;
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root", //write your database password
+    password: "yasiin98", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -49,41 +49,26 @@ app.get('/register', function(req, res) {
 //gets the path to login file on the URL field --> localhost:2000/
 app.get('/login', function(req, res) {
 	res.sendFile(path.join(__dirname,"./views/login.html"));
-
 });
 
-app.get('/logout', function(req, res) {
-    // remove the req.user property and clear the login session
-  req.sessionID=null;
-  console.log(req.sessionID);
-  res.redirect('/login');
-  });
-
-app.get('/newArticle', function(req, res) {
-    if(req.session.loggedin){
+app.get('/newArticle', isLoggedIn, function(req, res) {
 	res.sendFile(path.join(__dirname,"./views/newArticle.html"));
-    }
 });
 
-app.get('/index',isLoggedIn, function(req, res) {
-
-    
-	res.sendFile(path.join(__dirname,"./views/index.html"));
-    
+app.get('/home',isLoggedIn, function(req, res) {
+    res.sendFile(path.join(__dirname,"./views/index.html"));    
 });
 
 app.get('/about',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/about.html"));
-    
 });
 
 app.get('/mybookings',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/myBookings.html"));
-    
 })
 
 //login
-app.post("/auth", (req,res) => {
+app.post("/home", (req,res) => {
     const { email, password } = req.body;
     if(email && password) {
         connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email,password], function(err,result){
@@ -116,6 +101,18 @@ app.post("/auth", (req,res) => {
 
 });
 
+app.get('/logout', function(req, res) {
+    // remove the req.user property and clear the login session
+    if (req.session.email){
+        res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    }
+
+    req.session.destroy(err => {
+        console.log(err);;
+    });
+
+    res.redirect("./login");
+  });
 
 app.get('/bookingReperation', isLoggedIn, function(req, res) {
     res.sendFile(path.join(__dirname, "./views/bookingReperation.html"));
@@ -247,8 +244,6 @@ function isLoggedIn(req, res, next) {
         next();
     }
 }
-
-
 
 
 
