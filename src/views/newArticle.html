@@ -10,6 +10,24 @@
   <title>New Article</title>
 </head>
 <body>
+
+  <div class="outer-container">
+    <div class="inner-container">
+        <header>
+            <h1>MAR</h1>
+            <nav>
+                <ul>
+                    <li><a href="./index">Home</a></li>
+                    <li><a href="./bookingReperation">Book</a></li>
+                    <li><a href="./about">About</a></li>
+                    <li><a href="./logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+  </div>
+
+
   <form action="/newArticle" method="POST">
     <div class="form-group">
       <label for="title">Title </label>
@@ -20,8 +38,8 @@
       <label for="description">Description</label>
       <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Save Article</button> <t>
-    <button type="submit" class="btn btn-secondary"> <a href="./index" style="text-decoration: none;">Go back</a> </button> 
+    <button type="submit" class="btn btn-primary">Save Article</button> 
+    <button type="submit" class="btn btn-secondary"> <a href="./index" > Go back</a> </button> 
   </form>
 </body>
 </html>
