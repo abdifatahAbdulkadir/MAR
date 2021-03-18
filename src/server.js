@@ -8,6 +8,7 @@ const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
 let user_id;
+let book_id;
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -70,9 +71,10 @@ app.get('/mybookings',isLoggedIn, function(req,res){
 //DELETE BOOKING
 
 app.post("/deleteBooking",(req,res)=>{
-const {book_date, descr}=req.body;
+const {book_id}=req.body;
+console.log(req.body);
 if(req.session,loggedin){
-    connection.query("DELETE from calendar where book_date=? AND descr=?",[book_date,descr],function(err,result){
+    connection.query("DELETE from calendar where book_id=?",[book_id],function(err,result){
         if(err){
            console.log(err);
             res.render("./index.html", {message:("booking deleted")});
@@ -237,7 +239,7 @@ app.get("/booked",(req, res, next) => {
     } else {
 
         console.log("User_id --> " + user_id);
-                connection.query("SELECT descr, book_date  FROM calendar.book WHERE user_id =" + user_id, function (err, result) {
+                connection.query("SELECT *  FROM calendar.book WHERE user_id =" + user_id, function (err, result) {
                     if (err) {
                         console.log(err);
                     } else {
