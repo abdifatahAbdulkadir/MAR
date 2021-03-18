@@ -60,16 +60,22 @@
                         +
                         "<th>" + data[i].descr + "</th>" +
                         "<th>" + data[i].book_date + "</th>" +
-                        "<th> <button id='cancelbooking'> cancel</button> </th>" +
+                        "<th> <button onclick='deleteBooking()' id='cancelbooking'> cancel</button> </th>" +
                         "</tr>";
 
                     tbodyContainer.appendChild(tr);
                 }
             }
 
+            function deleteBooking(){
+                fetch('http://localhost:3000/deleteBooking');
+             
+            }
+
         </script>
 
     </div>
+ 
 </body>
 </html>
 

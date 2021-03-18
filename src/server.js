@@ -12,7 +12,7 @@ let user_id;
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "yasiin98", //write your database password
+    password: "root", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -65,7 +65,22 @@ app.get('/about',isLoggedIn, function(req,res){
 
 app.get('/mybookings',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/myBookings.html"));
-})
+});
+
+//DELETE BOOKING
+
+app.post("/deleteBooking",(req,res)=>{
+const {book_date, descr}=req.body;
+if(req.session,loggedin){
+    connection.query("DELETE from calendar where book_date=? AND descr=?",[book_date,descr],function(err,result){
+        if(err){
+           console.log(err);
+            res.render("./index.html", {message:("booking deleted")});
+
+        }
+    });
+}
+});
 
 //login
 app.post("/home", (req,res) => {
