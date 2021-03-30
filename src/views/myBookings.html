@@ -54,12 +54,15 @@
             }).catch(function (err) {
                 console.log("error:" + err);
             });
+            
             function appendData(data) {
+                
                 let tbodyContainer = document.getElementById("tbody");
                 for (let i = 0; i < data.length; i++) {
                     let tr = document.createElement("tr");
-                    let booking_id=data[i].book_id;
+                   
                     tr.innerHTML =
+               
 
                         "<tr>"
         
@@ -68,20 +71,31 @@
                         +
                         "<th>" + data[i].descr + "</th>" +
                         "<th>" + data[i].book_date + "</th>" +
-                        "<th> <button onclick='deleteBooking(booking_id)' id='cancelbooking'> cancel</button> </th>" +
                         "</tr>";
 
                     tbodyContainer.appendChild(tr);
                 }
             }
 
-            function deleteBooking(booking_id){
-                alert(myBooking_id);
-            }
+            function deleteBooking(){
+           
+              var bookiidCancel=document.getElementById("bookingidtxt").value;
+             fetch('http://localhost:3000/deleteBooking', {method: "POST", body: bookiidCancel});
+        }
+
+            
 
         </script>
 
     </div>
+    <br>
+    <center>
+        Type in booking id to cancel 
+        <br>
+        <input type="text" id="bookingidtxt">
+        <button id="cancelbutton" onclick="deleteBooking()">cancel</button>
+    </center>
+   
  
 </body>
 </html>

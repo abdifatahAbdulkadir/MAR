@@ -73,12 +73,14 @@ app.get('/mybookings',isLoggedIn, function(req,res){
 app.post("/deleteBooking",(req,res)=>{
 const {book_id}=req.body;
 console.log(req.body);
-if(req.session,loggedin){
-    connection.query("DELETE from calendar where book_id=?",[book_id],function(err,result){
+if(req.session.loggedin){
+    connection.query("DELETE from calendar.book where book_id=?",[book_id],function(err,result){
         if(err){
            console.log(err);
-            res.render("./index.html", {message:("booking deleted")});
 
+
+        }else{
+            console.log("success");
         }
     });
 }
@@ -265,6 +267,6 @@ function isLoggedIn(req, res, next) {
 
 
 //start server
-app.listen(3000, function() {
-    console.log("running server on port 3000");
+app.listen(4000, function() {
+    console.log("running server on port 4000");
 });
