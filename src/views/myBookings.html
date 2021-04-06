@@ -50,23 +50,26 @@
             }).catch(function (err) {
                 console.log("error:" + err);
             });
+            
             function appendData(data) {
+                
                 let tbodyContainer = document.getElementById("tbody");
                 for (let i = 0; i < data.length; i++) {
                     let tr = document.createElement("tr");
+                   
                     tr.innerHTML =
-                        "<tr>"
-                        +
-                        "<th>" + data[i].book_id + "</th>" +
-                        "<th>" + data[i].descr + "</th>" +
-                        "<th>" + data[i].book_date + "</th>" +
-                        `<th> <a href='/delete${data[i].book_id}'>Cancel</a></th>` +
+                        "<tr>" +
+                        "<th>" + data[i].book_id   +"</th>"    +
+                        "<th>" + data[i].book_id   + "</th>"   +
+                        "<th>" + data[i].descr     + "</th>"   +
+                        "<th>" + data[i].book_date + "</th>"   +
+                        `<th> <a href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
+                       
                         "</tr>";
 
                     tbodyContainer.appendChild(tr);
                 }
             }
-
         </script>
 
     </div>

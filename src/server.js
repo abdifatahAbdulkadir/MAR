@@ -8,11 +8,12 @@ const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
 let user_id;
+let book_id;
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "yasiin98", //write your database password
+    password: "root", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -84,7 +85,7 @@ app.get('/admin',isLoggedIn, function(req,res){
 
 app.get('/addArticle',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/addArticle.html"));
-});
+
 
 //login
 app.post("/home", (req,res) => {
