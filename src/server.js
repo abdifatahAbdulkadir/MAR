@@ -70,17 +70,17 @@ app.get('/mybookings',isLoggedIn, function(req,res){
 
 //DELETE BOOKING
 
-app.post("/deleteBooking",(req,res)=>{
-const {book_id}=req.body;
-console.log(req.body);
+app.get("/delete",(req,res)=>{
+
 if(req.session.loggedin){
-    connection.query("DELETE from calendar.book where book_id=?",[book_id],function(err,result){
+    connection.query("DELETE from calendar.book where book_id= " + req.query.book_id,function(err,result){
         if(err){
            console.log(err);
 
 
         }else{
             console.log("success");
+            res.sendFile(path.join(__dirname,"./views/myBookings.html"));
         }
     });
 }

@@ -47,7 +47,7 @@
     </center>
 
         <script>
-            fetch('http://localhost:3000/booked').then(function (response) {
+            fetch('http://localhost:4000/booked').then(function (response) {
                 return response.json();
             }).then(function (data) {
                 appendData(data);
@@ -71,17 +71,15 @@
                         +
                         "<th>" + data[i].descr + "</th>" +
                         "<th>" + data[i].book_date + "</th>" +
+                        `<th> <a href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
+                       
                         "</tr>";
 
                     tbodyContainer.appendChild(tr);
                 }
             }
 
-            function deleteBooking(){
-           
-              var bookiidCancel=document.getElementById("bookingidtxt").value;
-             fetch('http://localhost:3000/deleteBooking', {method: "POST", body: bookiidCancel});
-        }
+          
 
             
 
@@ -89,13 +87,7 @@
 
     </div>
     <br>
-    <center>
-        Type in booking id to cancel 
-        <br>
-        <input type="text" id="bookingidtxt">
-        <button id="cancelbutton" onclick="deleteBooking()">cancel</button>
-    </center>
-   
+  
  
 </body>
 </html>
