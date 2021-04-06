@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="booking.css">
 
@@ -20,34 +21,30 @@
 
     <div class="outer-container">
         <div class="inner-container">
-            <header>
-                <h1>MAR</h1>
-                <nav>
-                    <ul>
-                        <li><a href="./index">Home</a></li>
-                        <li><a href="./bookingReperation">Book</a></li>
-                        <li><a href="./about">About</a></li>
-                        <li><a href="./logout">Logout</a></li>
-                    </ul>
-                </nav>
-            </header>
+            <h1>MAR</h1>
+            <ul>
+                <li><a href="./index"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="./bookingReperation"><i class="fas fa-plus-square"></i>Book</a></li>
+                <li><a href="./myBookings"><i class="fas fa-book"></i>My Bookings</a></li>
+                <li><a href="./about"><i class="fas fa-address-card"></i>About</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            </ul>
         </div>
-    </div>
 
     
-        <div class="container mt-4">
+        <div class="container mt-4 ar ht">
             <div class="card" style="width: 18rem;">
                 <div class="card-header">Reperation</div>
                 <div class="card-body">
                     <form action="/bookingReperation" method="POST">
                         
                         <div class="form-group">
-                            <label for="password">Date</label>
+                            <label for="date">Date</label>
                             <input type="date" class="form-control" id="date" name="book_date">
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">What is wrong?</label>
+                            <label for="descr">What is wrong?</label>
                             <textarea class="form-control" id="descr" rows="3" name="descr"></textarea>
                         </div>
 
@@ -58,10 +55,10 @@
             </div>
 
             <br>
-            <div class="alert alert-danger err" style="display:none"> <%= message %></div>
+            <div class="alert alert-danger err"> <%= message %></div>
 
         </div>¨
 
-
+</div>
 </body>
 </html>

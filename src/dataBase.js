@@ -4,7 +4,7 @@ const mysql = require("mysql");
 let connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root", //write your database password
+    password: "yasiin98", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10,
@@ -25,8 +25,16 @@ db.news = () => {
     });
 }
 
- 
-
-//ToDo add the delete, update, insert queries below, follow above example ⬆
+db.getAllUser = () => {
+    return new Promise ((resolve, reject) =>{
+        connection.query(`SELECT user_id, name, email, role FROM calendar.users`, function (err,results){
+            if(err){
+                reject(err);
+            } else{
+                resolve(results);
+            }
+        });
+    });
+}
 
 exports.module = db;

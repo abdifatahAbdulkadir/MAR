@@ -2,130 +2,104 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing:border-box;
+    list-style:none;
+    text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
 }
 
 body{
     background-color: white;
-    box-sizing: border-box;
 }
 
 .outer-container{
+    display: flex;
+    position: relative;
+}
+
+.outer-container .inner-container {
+    width: 200px;
+    height: 100%;
+    background: #008080;
+    padding: 30px 0px;
     position: fixed;
-    width: 17%;
-    height: 100%;
-    background-color: teal;
 }
 
-.inner-container{
-    margin: 35px;
-    
+.outer-container .inner-container h1 {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-bottom: 1px solid #e0e4e8;
 }
 
-
-.inner-container h1 {
-    font-size: 350% ;
-    margin-top: 10%;
-    margin-left: 5%;
+.outer-container .inner-container ul li{
+    padding: 15px;
+    border-bottom: 1px solid #bdb8d7;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05);
 }
 
-nav ul{
-    margin-top: 80px;
-}
-
-nav ul li{
-    list-style: none;
-    margin-top: 5px;
-    font-size: 25px;
-}
-
-nav ul li a{
-    padding: 10px;
-    display: block;
-    text-decoration: none;
+.outer-container .inner-container ul li a{
     color: white;
+    display: block;
 }
 
-nav ul li a:hover{
-    background-color: tomato;
-    border-radius: 3px;
+.outer-container .inner-container ul li a .fas{
+    width: 25px;
+}
+
+.outer-container .inner-container ul li:hover{
+    background-color: orangered;
+}
+
+.outer-container .inner-container ul li:hover a{
+   color: #fff;
+}
+
+.ar{
     width: 100%;
+    margin-left: 250px;
 }
 
- /* this is where the calendar is sitting */
-.calendar-body{
-    height: 100%;
-    margin-left: 17%;
+.nr {
+    width: 50%;
+    margin-left: 250px;
+    padding-right: 525px;
 }
-.h1{
+
+
+/* height of the booking form*/
+.ht {
+    margin-top: -230px;
+}
+
+
+/*Admin Tables*/
+
+.admin-table {
     position: absolute;
-    margin: 20%;
-    margin-top: 10%;
-}
-#container{
-    position: absolute;
-    margin-left: 20%;
-    margin-top: 15%;
-    
-}
-#articles{
-    margin-left: 20%; 
-    margin-top: 15%; 
-    position: absolute;
-}
-.innerArticles{
-    height: 100px;
-    width: 800px;
-    font-size: 18px;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    border-radius: 5px; 
-}
-.dateClass{
-    color: gray;
-}
-.btn-primary{
-    background: #00807e;
-    border-radius: 28px;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    border: none;
-    
-}
-.btn-primary a{
-    color:#ffffff;
-    text-decoration: none;
-    list-style: none;
-}
-.login-container{
-    margin-left: 20%;
-    top: 20%;
-    position: absolute;
+    left: 30%;
+    top: 10%;
+    border: 1;
+    border-collapse: collapse;
 
 }
 
-@media only screen and (max-width: 500px) {
-    .inner-container h1 {
-        font-size: 150% ;
-        margin-top: 10%;
-        margin-left: -20px;
-    }
+.admin-table th, tbody td {
+    border-bottom: 1px solid #000;
+    padding: 10px;
+}
 
-  }
+.admin-table tr:hover{
+    background-color: #ddd;
+}
 
-  @media only screen and (max-width: 800px) {
-    .inner-container h1 {
-        font-size: 200% ;
-        margin-top: 10%;
-        margin-left: -20px;
-    }
-
-  }
-
-  @media only screen and (max-width: 1000px) {
-    .inner-container h1 {
-        font-size: 300% ;
-        margin-top: 10%;
-        margin-left: -20px;
-    }
-
-  }
+.admin-table th {
+    padding-top: 12px;
+    padding: bottom 12px;
+    text-align: left;
+    background-color: rgba(56, 56, 59, 0);
+    color: black;
+}
