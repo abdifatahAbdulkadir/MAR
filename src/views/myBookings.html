@@ -28,8 +28,9 @@
             </ul>
         </div>
 
-    <div class="table-container ar" style="margin-left: 20%;">
-        <table id="tableData">
+    
+        <h1 class="page-header">My Bookings</h1>
+        <table class="tableData">
             <thead>
                 <tr>
                     <th>Book ID</th>
@@ -38,7 +39,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="tbody"></tbody>
+            <tbody id="tb"></tbody>
 
         </table>
 
@@ -53,17 +54,16 @@
             
             function appendData(data) {
                 
-                let tbodyContainer = document.getElementById("tbody");
+                let tbodyContainer = document.getElementById("tb");
                 for (let i = 0; i < data.length; i++) {
                     let tr = document.createElement("tr");
                    
                     tr.innerHTML =
-                        "<tr>" +
-                        "<th>" + data[i].book_id   +"</th>"    +
-                        "<th>" + data[i].book_id   + "</th>"   +
-                        "<th>" + data[i].descr     + "</th>"   +
-                        "<th>" + data[i].book_date + "</th>"   +
-                        `<th> <a href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
+                        "<tr class='tr'>" +
+                        "<td class='td'>" + data[i].book_id   + "</td>"   +
+                        "<td class='td'>" + data[i].descr     + "</td>"   +
+                        "<td class='td'>" + data[i].book_date + "</td>"   +
+                        `<td class"'td'> <a class="btn_delete" href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
                        
                         "</tr>";
 
@@ -72,7 +72,7 @@
             }
         </script>
 
-    </div>
+    
     </div>
 </body>
 </html>

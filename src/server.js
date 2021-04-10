@@ -8,12 +8,11 @@ const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
 let user_id;
-let book_id;
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root", //write your database password
+    password: "****", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -85,8 +84,11 @@ app.get('/admin',isLoggedIn, function(req,res){
 
 app.get('/addArticle',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/addArticle.html"));
+});
 
-
+app.get('/adminBooking',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/adminBookingTable.html"));
+});
 //login
 app.post("/home", (req,res) => {
     const { email, password } = req.body;
@@ -101,6 +103,10 @@ app.post("/home", (req,res) => {
     } else {
         if (email && password) {
             connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email, password], function (err, result) {
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
                 if (result.length > 0) {
                     result.forEach(function (row){
                         if (row.role === "admin") {
@@ -192,26 +198,28 @@ app.post("/register", (req,res) => {
             } 
         }
 
-        if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
-        connection.query("INSERT INTO users set ?", {name: name, email: email, password: password}, (err,result) => {
-            if (err) {
-                console.log(err);
-            }else {
-                console.log(result);
-                return res.render("register", {
-                    message: "User Registered"
-                });
-            }
-        });
-        } else if(name === "" || email === "" || password=== "" || passwordConfirm === ""){
+        if(name === "" || email === "" || password=== "" || passwordConfirm === ""){
             return res.render("register", {
                 message: "Please fill all Fields to register"
             });
-        } else {
+        }else if(name === "" && email === "" && password=== "" && passwordConfirm === ""){
             return res.render("register", {
                 message: "Field is Empty"
             });
-       }
+        }else {
+            if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
+                connection.query("INSERT INTO users set ?", {name: name, email: email, password: password}, (err,result) => {
+                    if (err) {
+                        console.log(err);
+                    }else {
+                        console.log(result);
+                        return res.render("login", {
+                            message: "User Registered"
+                        });
+                    }
+                });
+            }
+        }
     });
 });
 
@@ -225,7 +233,7 @@ app.post("/newArticle", (req, res) => {
             console.log(err);
         } else {
             console.log(result);
-            return res.render("index");
+            return res.render("addArticle");
         }
     });
    }

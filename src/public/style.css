@@ -6,6 +6,7 @@
     list-style:none;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
+    
 }
 
 body{
@@ -17,7 +18,7 @@ body{
     position: relative;
 }
 
-.outer-container .inner-container {
+ .inner-container {
     width: 200px;
     height: 100%;
     background: #008080;
@@ -75,31 +76,94 @@ body{
     margin-top: -230px;
 }
 
-
-/*Admin Tables*/
-
-.admin-table {
+.page-header{
     position: absolute;
     left: 30%;
-    top: 10%;
-    border: 1;
-    border-collapse: collapse;
-
+    margin-top:3%;
+    font-family: "Helvetica";
+    color: #990066;
 }
 
-.admin-table th, tbody td {
+/*Admin Tables & my bookings table*/
+
+.tableData {
+    position: absolute;
+    left: 30%;
+    margin-top: 7%;
+    border: 1;
+    border-collapse: collapse;
+}
+
+
+.tableData thead th, tbody tr td {
     border-bottom: 1px solid #000;
     padding: 10px;
 }
 
-.admin-table tr:hover{
+.tableData tr:hover{
     background-color: #ddd;
 }
 
-.admin-table th {
+.tableData thead tr th {
     padding-top: 12px;
     padding: bottom 12px;
     text-align: left;
-    background-color: rgba(56, 56, 59, 0);
-    color: black;
+    background-color: #000;
+    color: white;
+}
+
+.btn_delete {
+    box-shadow: 0px 0px 0px 2px  #eb2265;
+	background:linear-gradient(to bottom,  #eb2265 5%,  #eb2265 100%);
+	background-color: #eb2265;
+	border-radius:10px;
+	border:1px solid  #eb2265;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	padding:7px 19px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px  #eb2265;
+}
+
+#articles{
+    width: 100%;
+    margin-left: 250px;
+    margin-top: 5%;
+    position: absolute;
+}
+
+.innerArticles {
+    width: 500px;
+    height: auto;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.info{
+    margin: 24px;
+}
+
+.dateClass{
+    color: grey;
+    margin-top: 10px;
+}
+
+.desc{
+    margin-top: -10px;
+}
+
+.straight_line {
+    margin-top: -22px;
+    margin-left: 15px;
+    margin-right: 15px;
+    opacity: 0.5;
+    border: 1px solid grey;
+}
+
+.anon {
+    font-family: "Helvetica";
+    color: #990066;
 }

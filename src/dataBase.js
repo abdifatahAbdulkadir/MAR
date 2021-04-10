@@ -27,7 +27,7 @@ db.news = () => {
 
 db.getAllUser = () => {
     return new Promise ((resolve, reject) =>{
-        connection.query(`SELECT user_id, name, email, role FROM calendar.users`, function (err,results){
+        connection.query(`SELECT * FROM calendar.users`, function (err,results){
             if(err){
                 reject(err);
             } else{
@@ -36,5 +36,44 @@ db.getAllUser = () => {
         });
     });
 }
+
+db.deleteUser = (user_id) => {
+    return new Promise ((resolve, reject) =>{
+        connection.query("DELETE FROM calendar.users WHERE user_id= " + user_id, function (err,results){
+            if(err){
+                reject(err);
+            } else{
+                resolve(results);
+            }
+        });
+    });
+}
+
+//display all booking on admin page
+db.getAllBookings = () => {
+    return new Promise ((resolve, reject) =>{
+        connection.query(`SELECT * FROM calendar.book`, function (err,results){
+            if(err){
+                reject(err);
+            } else{
+                resolve(results);
+            }
+        });
+    });
+}
+
+//delete booking one by one on admin page
+db.deleteAllBookings = (book_id) => {
+    return new Promise ((resolve, reject) =>{
+        connection.query("DELETE FROM calendar.book WHERE book_id= " + book_id, function (err,results){
+            if(err){
+                reject(err);
+            } else{
+                resolve(results);
+            }
+        });
+    });
+}
+
 
 exports.module = db;
