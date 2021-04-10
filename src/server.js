@@ -8,12 +8,11 @@ const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
 let user_id;
-let book_id;
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root", //write your database password
+    password: "****", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -22,6 +21,7 @@ const connection = mysql.createConnection({
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/src/views'));
+app.use(express.static(__dirname + 'src'));
 
 
 
@@ -37,6 +37,15 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }));
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3003/index");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
 
 app.use(flash());
 app.use(connectFlash());
@@ -68,42 +77,22 @@ app.get('/mybookings',isLoggedIn, function(req,res){
     res.sendFile(path.join(__dirname,"./views/myBookings.html"));
 });
 
-//DELETE BOOKING
-
-app.get("/delete",(req,res)=>{
-
-if(req.session.loggedin){
-    connection.query("DELETE from calendar.book where book_id= " + req.query.book_id,function(err,result){
-        if(err){
-           console.log(err);
-
-
-        }else{
-            console.log("success");
-            res.sendFile(path.join(__dirname,"./views/myBookings.html"));
-        }
-    });
-}
+//admin page
+app.get('/admin',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/adminPage.html"));
 });
 
+app.get('/addArticle',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/addArticle.html"));
+});
+
+app.get('/adminBooking',isLoggedIn, function(req,res){
+    res.sendFile(path.join(__dirname,"./views/adminBookingTable.html"));
+});
 //login
 app.post("/home", (req,res) => {
     const { email, password } = req.body;
-    if(email && password) {
-        connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email,password], function(err,result){
-            if(result.length > 0) {
-                user_id = result[0].user_id;
-                req.session.loggedin = true;
-                req.session.email = email;
-                return res.status(200).render("./index.html");
-            }else {
-                res.render("./login.html",{
-                    message: ("Incorrect email and/or Password!")
-                });
-            }
-            res.end();
-        });
-    } else if(email === "" && password === "") {
+     if(email === "" && password === "") {
         res.render("./login.html",{
             message: ("Please enter Email and Password")
         });
@@ -112,10 +101,31 @@ app.post("/home", (req,res) => {
             message: ("Please enter Email and Password")
         });
     } else {
-        res.res.render("./login.html",{
-            message: "Please Enter your email and Password!"
-         });
-        res.end();
+        if (email && password) {
+            connection.query("SELECT * FROM calendar.users WHERE email=? AND password=?", [email, password], function (err, result) {
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                if (result.length > 0) {
+                    result.forEach(function (row){
+                        if (row.role === "admin") {
+                        user_id = row.user_id;
+                        req.session.loggedin = true;
+                        req.session.email = email;
+                        return res.status(200).render("./adminPage.html");
+                     } else if (row.role === "user") {
+                        user_id = row.user_id;
+                        req.session.loggedin = true;
+                        req.session.email = email;
+                        return res.status(200).render("./index.html");
+                    }
+                    });
+                    
+                }
+            });
+        }
+        
     }
 
 });
@@ -137,7 +147,7 @@ app.get('/bookingReperation', isLoggedIn, function(req, res) {
     res.sendFile(path.join(__dirname, "./views/bookingReperation.html"));
 });
 
-//bookingReperation
+
 app.post("/bookingReperation", (req, res) => {
     const { book_date, descr } = req.body;
     if (req.session.loggedin) {
@@ -188,26 +198,28 @@ app.post("/register", (req,res) => {
             } 
         }
 
-        if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
-        connection.query("INSERT INTO users set ?", {name: name, email: email, password: password}, (err,result) => {
-            if (err) {
-                console.log(err);
-            }else {
-                console.log(result);
-                return res.render("register", {
-                    message: "User Registered"
-                });
-            }
-        });
-        } else if(name === "" || email === "" || password=== "" || passwordConfirm === ""){
+        if(name === "" || email === "" || password=== "" || passwordConfirm === ""){
             return res.render("register", {
                 message: "Please fill all Fields to register"
             });
-        } else {
+        }else if(name === "" && email === "" && password=== "" && passwordConfirm === ""){
             return res.render("register", {
                 message: "Field is Empty"
             });
-       }
+        }else {
+            if(!(name === "" && email === "" && password=== "" && passwordConfirm === "")){
+                connection.query("INSERT INTO users set ?", {name: name, email: email, password: password}, (err,result) => {
+                    if (err) {
+                        console.log(err);
+                    }else {
+                        console.log(result);
+                        return res.render("login", {
+                            message: "User Registered"
+                        });
+                    }
+                });
+            }
+        }
     });
 });
 
@@ -221,7 +233,7 @@ app.post("/newArticle", (req, res) => {
             console.log(err);
         } else {
             console.log(result);
-            return res.render("index");
+            return res.render("addArticle");
         }
     });
    }
@@ -241,17 +253,32 @@ app.get("/booked",(req, res, next) => {
     } else {
 
         console.log("User_id --> " + user_id);
-                connection.query("SELECT *  FROM calendar.book WHERE user_id =" + user_id, function (err, result) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        if (result.length > 0) {
-                            res.json(result);
-                        }
-                    }
+        connection.query("SELECT * FROM calendar.book WHERE user_id =" + user_id, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result.length > 0) {
+                    console.log(result[0].book_id);
+                    res.json(result);
+                }
+            }
+        });
+    }
+});
 
-                });
-
+app.get("/delete", (req, res) => {
+    const book_id = req.query.book_id;
+    console.log("--------------> " + book_id); //<------------------------------
+    if (!req.session.loggedin) {
+        return res.status(401).redirect("./login");
+    } else {
+        connection.query("DELETE FROM calendar.book WHERE book_id= " + req.query.book_id, function (err, result) {
+            if (err) {
+                throw err;
+            } else {
+                res.redirect("./myBookings");
+            }
+        });
     }
 });
 
@@ -267,6 +294,6 @@ function isLoggedIn(req, res, next) {
 
 
 //start server
-app.listen(4000, function() {
-    console.log("running server on port 4000");
+app.listen(3003, function() {
+    console.log("running server on port 3003");
 });

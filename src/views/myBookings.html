@@ -8,8 +8,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="booking.css">
+    <link rel="stylesheet" href="/booking.css">
     <title>MAR</title>
 
 </head>
@@ -17,37 +18,33 @@
 <body>
     <div class="outer-container">
         <div class="inner-container">
-            <header>
-                <h1>MAR</h1>
-                <nav>
-                    <ul>
-                        <li><a href="./index">Home</a></li>
-                        <li><a href="./bookingReperation">Book</a></li>
-                        <li><a href="./about">About</a></li>
-                        <li><a href="./logout">Logout</a></li>
-                    </ul>
-                </nav>
-            </header>
+            <h1>MAR</h1>
+            <ul>
+                <li><a href="./index"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="./bookingReperation"><i class="fas fa-plus-square"></i>Book</a></li>
+                <li><a href="./myBookings"><i class="fas fa-book"></i>My Bookings</a></li>
+                <li><a href="./about"><i class="fas fa-address-card"></i>About</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            </ul>
         </div>
-    </div>
 
-    <div class="table-container">
-        <center>
-        <table id="tableData">
+    
+        <h1 class="page-header">My Bookings</h1>
+        <table class="tableData">
             <thead>
                 <tr>
-                    <th>bookID</th>
+                    <th>Book ID</th>
                     <th>Description</th>
                     <th>Booked Date</th>
+                    <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="tbody"></tbody>
+            <tbody id="tb"></tbody>
 
         </table>
-    </center>
 
         <script>
-            fetch('http://localhost:4000/booked').then(function (response) {
+            fetch('http://localhost:3003/booked').then(function (response) {
                 return response.json();
             }).then(function (data) {
                 appendData(data);
@@ -57,38 +54,26 @@
             
             function appendData(data) {
                 
-                let tbodyContainer = document.getElementById("tbody");
+                let tbodyContainer = document.getElementById("tb");
                 for (let i = 0; i < data.length; i++) {
                     let tr = document.createElement("tr");
                    
                     tr.innerHTML =
-               
-
-                        "<tr>"
-        
-                            +
-                            "<th>"+data[i].book_id +"</th>"
-                        +
-                        "<th>" + data[i].descr + "</th>" +
-                        "<th>" + data[i].book_date + "</th>" +
-                        `<th> <a href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
+                        "<tr class='tr'>" +
+                        "<td class='td'>" + data[i].book_id   + "</td>"   +
+                        "<td class='td'>" + data[i].descr     + "</td>"   +
+                        "<td class='td'>" + data[i].book_date + "</td>"   +
+                        `<td class"'td'> <a class="btn_delete" href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
                        
                         "</tr>";
 
                     tbodyContainer.appendChild(tr);
                 }
             }
-
-          
-
-            
-
         </script>
 
+    
     </div>
-    <br>
-  
- 
 </body>
 </html>
 
