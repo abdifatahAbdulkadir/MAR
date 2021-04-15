@@ -7,12 +7,12 @@ const morgan = require("morgan");
 const flash = require("req-flash");
 const connectFlash = require("connect-flash");
 const apiRouter = require("./route");
-let user_id;
+let user_id; // to identify the logged user
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "****", //write your database password
+    password: "yasiin98", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -22,6 +22,7 @@ const connection = mysql.createConnection({
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/src/views'));
 app.use(express.static(__dirname + 'src'));
+app.use("/src/images/logo.png" ,express.static('/src/images/logo.png'));
 
 
 
@@ -33,7 +34,7 @@ app.use(express.json());
 app.use("/",apiRouter);
 
 app.use(session({
-    secret: "secret",
+    secret: "ncoweuihcskjdfoi",
     resave: true,
     saveUninitialized: false
 }));
@@ -42,7 +43,7 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3003/index");
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+      "Origin, X-Requested-With, Content-Type, Accept",
     );
     next();
   });
@@ -69,7 +70,7 @@ app.get('/home',isLoggedIn, function(req, res) {
     res.sendFile(path.join(__dirname,"./views/index.html"));    
 });
 
-app.get('/about',isLoggedIn, function(req,res){
+app.get('/about', function(req,res){
     res.sendFile(path.join(__dirname,"./views/about.html"));
 });
 
@@ -160,7 +161,11 @@ app.post("/bookingReperation", (req, res) => {
                     return res.render("bookingReperation", {
                         message: "Date is already in use"
                     });
-                } else {
+                } else if(descr === "" && book_date === ""){
+                    return res.render("bookingReperation", {
+                        message: "Book a Date"
+                    });
+                }else{
                     if (!(descr === "" && book_date === "")) {
                         connection.query("INSERT INTO calendar.book set ?", { descr: descr, book_date: book_date, user_id }, (err, result) => {
                             if (err) {
