@@ -21,7 +21,7 @@ body{
  .inner-container {
     width: 200px;
     height: 100%;
-    background: #008080;
+    background-color:#2F4050;
     padding: 30px 0px;
     position: fixed;
 }
@@ -51,8 +51,10 @@ body{
     width: 25px;
 }
 
+/* Button hover effect*/
 .outer-container .inner-container ul li:hover{
-    background-color: orangered;
+    background-color: #293846;
+    cursor: pointer;
 }
 
 .outer-container .inner-container ul li:hover a{
@@ -129,7 +131,6 @@ body{
 }
 
 #articles{
-    width: 100%;
     margin-left: 250px;
     margin-top: 5%;
     position: absolute;
@@ -166,4 +167,35 @@ body{
 .anon {
     font-family: "Helvetica";
     color: #990066;
+}
+
+.btn-news {
+    box-shadow: 0px 0px 0px 2px  #558ee9;
+	background:linear-gradient(to bottom,  #558ee9 5%,  #558ee9 100%);
+	background-color: #558ee9;
+	border-radius:10px;
+	border:1px solid  #558ee9;
+	display:inline-block;
+	cursor:pointer;
+	color:#558ee9;
+	font-family:Arial;
+	font-size:14px;
+	padding:7px 19px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #558ee9;
+}
+
+.btn-news a {
+    color: white;
+    text-decoration: none;
+}
+
+/* NewArticle.html form adjusting*/
+.n-article {
+    margin-left: 250px;
+    margin-top: 20px;
+}
+
+.err {
+    width: 28%;
 }
