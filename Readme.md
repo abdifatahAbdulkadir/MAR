@@ -72,3 +72,45 @@
    * Able to logout when finished.
 
 
+## Frontend
+---
+- **Ajax**
+  * The jQuery is used to fetch data from json to the table. Each table tree is then dynamically generated as more data becomes available
+     ``` 
+     fetch('http://localhost:3003/booked').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                appendData(data);
+            }).catch(function (err) {
+                console.log("error:" + err);
+            });
+            
+            function appendData(data) {
+                
+                let tbodyContainer = document.getElementById("tb");
+                for (let i = 0; i < data.length; i++) {
+                    let tr = document.createElement("tr");
+                   
+                    tr.innerHTML =
+                        "<tr class='tr'>" +
+                        "<td class='td'>" + data[i].book_id   + "</td>"   +
+                        "<td class='td'>" + data[i].descr     + "</td>"   +
+                        "<td class='td'>" + data[i].book_date + "</td>"   +
+                        `<td class"'td'> <a class="btn_delete" href='/delete?book_id=${data[i].book_id}'>cancel</a></th>`+
+                       
+                        "</tr>";
+ 
+                    tbodyContainer.appendChild(tr);
+                }
+            }
+    ```
+- **HTML/CSS & bootstrap**
+  * For login, register and booking interface, bootstrap is used.
+  * The rest (the navbar, tables) are designed with HTML/CSS
+- **Error Handler**
+  * Errors are handled by notifying the user. These Error are
+    1. Login/register - The user should enter all fields otherwise different errors with different messages  will be shown. The messages are generated from the server side.
+    2. When same date is booked a message is displayed notifying the user ```The date is already been booked```
+
+
+
