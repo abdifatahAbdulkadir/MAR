@@ -199,3 +199,18 @@ body{
 .err {
     width: 28%;
 }
+
+/* About Page */
+.about-us{
+    text-align: center;
+    margin-top: 100px;
+    position: relative;
+}
+
+.card-cntr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}

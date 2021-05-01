@@ -71,4 +71,59 @@
    * View Announcements
    * Able to logout when finished.
 
+   ## Backend
+- **Server**
+  * Nodejs, a javascript runtime environment is used as a backend together with express.js a backend web app framework. It enables us to handle all the Database and URL path routes and create the RESTFUL API.
+  * Require() and Database connectivity :
+     1. We call the needed requirements such as express, path for locating the location of all html pages, mysql for setting up the database, apiRouter for requiring the route.js location.
+  
+    ```
+    const express = require("express");
+    const app = express();
+    const path = require("path");
+    const mysql = require("mysql");
+    const apiRouter = require("./route");
+    ```
+ 
+- **Routes**
+  * Routing helps our app to organize and manage the application states, and even make callbacks
+  
+    ```
+    const express = require("express");
+    const router = express.Router();
+    const data_base = require("./dataBase.js");
+ 
+    router.get("/news", async(req, res) => {
+    try {
+        let dbResult = await data_base.module.news();
+        res.json(dbResult);
+        console.log(dbResult);
+    } catch (e) {
+        console.log(e);
+        res.send("500");
+     }
+    });
+ 
+  * Express Sessions are used to store the user's credential when logged-in. Below we are creating the session secret which we will then use to store the user credentials.
+    ```
+    app.use(session({
+    secret: "secret",
+    resave: ncoweuihcskjdfoi,
+    saveUninitialized: false
+    }));
+ 
+- **MySQL Connectivity**
+  * We make connections inside the `server.js & database.js`. Below is we connect to the database:
+  
+    ```
+    const connection = mysql.createConnection({
+    host: "localhost",
+    user: "***",
+    password: "***", 
+    database: "***", 
+    port: 3306,
+    connectionLimit: 10
+    }); 
+
+
 
