@@ -12,7 +12,7 @@ let user_id; // to identify the logged user
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "yasiin98", //write your database password
+    password: "root", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
@@ -21,10 +21,7 @@ const connection = mysql.createConnection({
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/src/views'));
-app.use(express.static(__dirname + 'src'));
-app.use("/src/images/logo.png" ,express.static('/src/images/logo.png'));
-
-
+app.use(express.static(__dirname + '/MAR'));
 
 
 
