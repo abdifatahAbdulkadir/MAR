@@ -13,15 +13,16 @@
     - **Database structure**
     - **Multiple Page Application (MPA)**
     - **Restful API**
-- **[Frontend](#Frontend)**
-    - **Ajax**
-    - **HTML/CSS & bootstrap**
-    - **Error Handler**
 - **[Backend](#Backend)**
     - **Server**
     - **Routes**
     - **Middleware** 
     - **MySQL**
+- **[Frontend](#Frontend)**
+    - **Ajax**
+    - **HTML/CSS & bootstrap**
+    - **Error Handler**
+
 <br>
 
 ## File Structure
@@ -71,7 +72,8 @@
    * View Announcements
    * Able to logout when finished.
 
-   ## Backend
+## Backend
+   ---
 - **Server**
   * Nodejs, a javascript runtime environment is used as a backend together with express.js a backend web app framework. It enables us to handle all the Database and URL path routes and create the RESTFUL API.
   * Require() and Database connectivity :
