@@ -11,8 +11,8 @@ let user_id; // to identify the logged user
 
 const connection = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "root", //write your database password
+    user: "*",
+    password: "*", //write your database password
     database: "calendar", // your database name
     port: 3306,
     connectionLimit: 10
